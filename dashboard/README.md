@@ -1,12 +1,58 @@
-# React + Vite
+# Frontend Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a React-based dashboard for managing purchase invoices with backend integration.
 
-Currently, two official plugins are available:
+## Prerequisites
+- Node.js (v14 or higher)
+- Backend server running on port 6768
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
 
-## Expanding the ESLint configuration
+1. Install dependencies:
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. Start the development server:
+```bash
+npm run dev
+```
+
+The application will run on `http://localhost:5173`
+
+## Features
+
+- **Purchase Invoice Management**: Create and manage purchase invoices
+- **Vendor Management**: Search and select from existing vendors
+- **Product Management**: Add multiple products with quantities and costs
+- **Real-time Database Connection**: Live connection status indicator
+- **Responsive Design**: Works on desktop and mobile devices
+
+## API Integration
+
+The frontend connects to the backend API using axios with the following configuration:
+
+- **Base URL**: `http://localhost:6768/api`
+- **Timeout**: 10 seconds
+- **CORS**: Enabled for local development
+
+### API Endpoints Used
+
+- `GET /api/invoices` - Fetch all invoices
+- `POST /api/invoices` - Create new invoice
+- `GET /api/invoices/vendors/list` - Fetch vendor list
+- `GET /` - Health check
+
+## Connection Status
+
+The application displays real-time connection status:
+- ✅ **Connected**: Backend is reachable
+- ❌ **Disconnected**: Backend is not responding
+- ⟳ **Checking**: Verifying connection
+
+## Development
+
+- Built with React 19
+- Styled with Tailwind CSS
+- Uses Vite for fast development
+- Includes ESLint for code quality

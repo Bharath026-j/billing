@@ -10,7 +10,7 @@ import Reports from "./pages/Reports";
 import Header from "./components/Header";
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState("products");
+  const [activeTab, setActiveTab] = useState("productInvoice");
 
   const renderPage = () => {
     switch (activeTab) {
@@ -38,7 +38,7 @@ export default function App() {
     <div className="flex h-screen bg-gray-50">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="flex flex-col flex-1">
-        <Header /> 
+      <Header activeTab={activeTab} />
         <main className="flex-1 p-4 overflow-auto">
           {renderPage()}
         </main>
