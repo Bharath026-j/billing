@@ -1,72 +1,3 @@
-// import PurchaseModel from "../models/purchaseModel.js";
-
-// // @desc   Create new purchase invoice
-// export const createInvoice = async (req, res) => {
-//   try {
-//     const invoice = new PurchaseModel(req.body);
-//     await invoice.save();
-//     res.status(201).json(invoice);
-//   } catch (error) {
-//     console.error("Create Invoice Error:", error);
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
-// // @desc   Get all invoices
-// export const getInvoices = async (req, res) => {
-//   try {
-//     const invoices = await PurchaseModel.find().sort({ createdAt: -1 });
-//     res.json(invoices);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-// // @desc   Get invoice by ID
-// export const getInvoiceById = async (req, res) => {
-//   try {
-//     const invoice = await PurchaseModel.findById(req.params.id);
-//     if (!invoice) {
-//       return res.status(404).json({ error: "Invoice not found" });
-//     }
-//     res.json(invoice);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-// // @desc   Update invoice
-// export const updateInvoice = async (req, res) => {
-//   try {
-//     const invoice = await PurchaseModel.findByIdAndUpdate(
-//       req.params.id,
-//       req.body,
-//       { new: true, runValidators: true }
-//     );
-//     if (!invoice) {
-//       return res.status(404).json({ error: "Invoice not found" });
-//     }
-//     res.json(invoice);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
-// // @desc   Delete invoice
-// export const deleteInvoice = async (req, res) => {
-//   try {
-//     const invoice = await PurchaseModel.findByIdAndDelete(req.params.id);
-//     if (!invoice) {
-//       return res.status(404).json({ error: "Invoice not found" });
-//     }
-//     res.json({ message: "Invoice deleted successfully" });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-
-
 import PurchaseInvoice from "../models/purchaseModel.js";
 
 // Create a new purchase invoice
@@ -151,6 +82,14 @@ export const deletePurchaseInvoice = async (req, res) => {
       return res.status(404).json({ error: "Purchase invoice not found" });
     }
     res.status(200).json({ message: "Purchase invoice deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+export const getVendorsList = async (req, res) => {
+  try {
+    const vendors = await PurchaseInvoice.distinct('vendor');
+    res.status(200).json(vendors);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

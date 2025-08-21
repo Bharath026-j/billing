@@ -5,8 +5,18 @@ import {
   getPurchaseInvoiceById,
   updatePurchaseInvoice,
   deletePurchaseInvoice,
-} from "../controllers/purchaseController.js"; // ✅ fixed path
-import PurchaseInvoice from "../models/purchaseModel.js"; // ✅ fixed name
+} from "../controllers/purchaseController.js";
+import PurchaseInvoice from "../models/purchaseModel.js";
+
+// Import expense controller functions
+import {
+  getProductsForExpenseTracking,
+  getFilterOptions,
+  createOrUpdateProductExpense,
+  getProductExpense,
+  updateExpenseItem,
+  deleteExpenseItem
+} from "../controllers/expenseController.js";
 
 const router = express.Router();
 
@@ -25,7 +35,7 @@ router.put("/:id", updatePurchaseInvoice);
 // DELETE invoice
 router.delete("/:id", deletePurchaseInvoice);
 
-// GET all vendors (unique vendor names)
+// GET all vendors (unique vendor names) - UPDATED VERSION
 router.get("/vendors/list", async (req, res) => {
   try {
     const vendors = await PurchaseInvoice.distinct("vendor");
@@ -34,7 +44,7 @@ router.get("/vendors/list", async (req, res) => {
         const invoice = await PurchaseInvoice.findOne({ vendor: vendorName });
         return {
           name: vendorName,
-          phone: invoice.phone,
+          phone: invoice ? invoice.phone : "N/A",
         };
       })
     );
@@ -43,5 +53,13 @@ router.get("/vendors/list", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// Expense routes
+router.get("/expense/products", getProductsForExpenseTracking);
+router.get("/expense/filters", getFilterOptions);
+router.post("/expense", createOrUpdateProductExpense);
+router.get("/expense/product/:purchaseInvoiceId/:productName/:hsn", getProductExpense);
+router.put("/expense/:expenseRecordId/item/:expenseItemId", updateExpenseItem);
+router.delete("/expense/:expenseRecordId/item/:expenseItemId", deleteExpenseItem);
 
 export default router;
